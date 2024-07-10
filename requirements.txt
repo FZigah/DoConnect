@@ -1,0 +1,6 @@
+fastapi[all]
+uvicorn
+passlib
+bcrypt
+python-jose
+pymongo[srv]==3.11
