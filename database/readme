@@ -1,0 +1,13 @@
+Run "pip install -r requirements.txt"
+This will install all project requirements
+
+Run "uvicorn main:app --reload"
+This will start the server
+
+localhost:8000/docs
+This will give you the endpoint and schemas
+
+Note: Always do these in a virtual environment
+
+Email is treated as the username
+
