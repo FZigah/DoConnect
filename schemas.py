@@ -23,6 +23,7 @@ class DoctorContacts(BaseModel):
 class DoctorSignUp(BaseModel):
     username: str
     email: str
+    specialty: str
     password: str
     status: Union[str, None] = None
     experience: str
@@ -68,4 +69,13 @@ class AppointmentStatus(BaseModel):
     appointment_status: str
 
 class DoctorRating(BaseModel):
-    rating:str
+    rating:int
+
+class forgetPwd(BaseModel):
+     email: str
+
+class VerifyCode(BaseModel):
+     code: int
+
+class ResetPassword(BaseModel):
+     new_password: str

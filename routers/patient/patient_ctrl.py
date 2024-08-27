@@ -36,7 +36,7 @@ async def update_patient_profile(current_user: schemas.User = Depends(oauth2_pat
     pass
 
 
-@router.delete("/patient/{id}")
+@router.delete("/patient/")
 async def delete_patient_account(current_user: schemas.User = Depends(oauth2_patient.get_current_user)):
     if current_user.user_role == "patient":
              patient_auth = patient_auth_collection.find_one_and_delete({"_id": ObjectId(current_user.user_id)})
@@ -64,11 +64,15 @@ async def get_all_doctors(current_user: schemas.User = Depends(oauth2_patient.ge
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Access denied")
 
 
-@router.patch("/patient/rate-doctor/{id}")
+@router.patch("/patient/rate-doctor/")
 async def rate_doctor(request:schemas.DoctorRating, id: str, current_user: schemas.User = Depends(oauth2_doctor.get_current_user)):
     if current_user.user_role == "patient":
         try:
-            rating = doctor_profile_collection.find_one_and_update({"owner": ObjectId(id)},{'$push':{ "ratings": request.rating}})
+            rating = doctor_profile_collection.find_one_and_update({"owner": ObjectId(id)},{'$push':{ "ratings_array": request.rating}})
+            doctors_profile = doctor_profile_collection.find_one({"owner": ObjectId(id)})
+            doctors_profile_array_rating = list(doctors_profile["ratings_array"])
+            average_rating = sum(doctors_profile_array_rating ) // len(doctors_profile_array_rating)
+            doctor_profile_collection.find_one_and_update({"owner": ObjectId(id)},{'$set':{ "ratings": average_rating}})
             return{
                 "detail" : "Successfully rated"
             }
@@ -116,7 +120,7 @@ async def create_appointments(request:schemas.Appointment,current_user: schemas.
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Access denied")
 
-@router.delete("/patient/appointments/{id}")
+@router.delete("/patient/appointments/")
 async def delete_appointment(id:str,current_user: schemas.User = Depends(oauth2_patient.get_current_user)):
     if current_user.user_role == "patient":
         try:

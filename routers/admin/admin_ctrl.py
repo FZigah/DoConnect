@@ -39,7 +39,7 @@ async def get_all_users(current_user: schemas.User = Depends(oauth2_admin.get_cu
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Access denied")
 
-@router.delete("/admin/users/doctor/{id}")
+@router.delete("/admin/users/doctor/")
 async def delete_doctor(id: str, current_user: schemas.User = Depends(oauth2_admin.get_current_user)):
 
     if current_user.user_role == "admin":
@@ -52,7 +52,7 @@ async def delete_doctor(id: str, current_user: schemas.User = Depends(oauth2_adm
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Access denied")
     
-@router.delete("/admin/users/patient/{id}")
+@router.delete("/admin/users/patient/")
 async def delete_patient(id: str, current_user: schemas.User = Depends(oauth2_admin.get_current_user)):
     if current_user.user_role == "admin":
              patient_auth = patient_auth_collection.find_one_and_delete({"_id": ObjectId(id)})

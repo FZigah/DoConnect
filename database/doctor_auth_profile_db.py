@@ -32,6 +32,14 @@ def create_doctor_auth_collection():
                 "minLength": 8,
                 "description": "must be a string and is required"
             },
+             "hashed_reset_pin":{
+                "bsonType": "string",
+                "description": "must be a string and is required"
+            },
+            "reset_expire_time":{
+                "bsonType": "date",
+                "description": "must be a string and is required"
+            },
             "createdAt": {
                 "bsonType": "date",
                 "description": "must be a date and is required"
@@ -80,7 +88,11 @@ def create_doctor_profile_collection():
                 "bsonType": "string",
                  "description": "must be a string and is required"
             },
-            "ratings" :{
+            "specialty" : {
+                "bsonType": "string",
+                "description": "must be a string and is required"
+            },
+            "ratings_array" :{
                 "bsonType" : "array",
                 "minItems" : 0,
                 "uniqueItems" : False,
@@ -88,6 +100,10 @@ def create_doctor_profile_collection():
                     "bsonType" : "int",
                     "description" : "items must contain a number"
                     }
+            },
+            "ratings" :{
+                "bsonType" : "int",
+                "description": "must be a int and is required"
             },
             "contacts" : {
                 "bsonType" : "array",

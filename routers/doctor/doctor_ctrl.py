@@ -57,7 +57,7 @@ async def get_doctor_appointment(current_user: schemas.User = Depends(oauth2_doc
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Access denied")
     
-@router.patch("doctor/appointment/{id}")
+@router.patch("doctor/appointment/")
 async def update_appointment(request: schemas.AppointmentStatus, id:str, current_user: schemas.User = Depends(oauth2_doctor.get_current_user)):
     if current_user.user_role == "doctor":
         try:
