@@ -45,7 +45,7 @@ async def create_admin(request: schemas.AdminSignUp, current_user: schemas.User 
     except Exception as e:
         response = str(e)
         if "duplicate key error collection" in response:
-           raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already is already registered")
+           raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered")
         else:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f'{e}')
         
